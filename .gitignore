@@ -1,0 +1,24 @@
+node_modules/
+dist/
+# copied from node_modules by scripts/copy-core.mjs (32 MB each)
+public/ffmpeg/
+.netlify/
+.claude/
+testmedia/
+*.local
+
+# Local secrets and private notes: never commit
+.env
+.env.*
+!.env.example
+_private/
+tests/browser/out.*
+
+# Never commit these
+SITE-PASSWORD*
+tests/out/
+.env
+.env.*
+!.env.example
+_private/
+node_modules/

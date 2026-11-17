@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0b0b14">
+  <title>Roto-Slice</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <!-- shared icon shapes -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></symbol>
+      <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7 9l5-5 5 5M5 15v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4"/></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></symbol>
+      <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6"/></symbol>
+      <symbol id="i-blade" viewBox="0 0 64 64">
+        <path d="M32 2l5 9 9-5 0 10 10 0-5 9 9 5-9 5 5 9-10 0 0 10-9-5-5 9-5-9-9 5 0-10-10 0 5-9-9-5 9-5-5-9 10 0 0-10 9 5z"/>
+        <circle cx="32" cy="32" r="15" class="blade-plate"/>
+        <circle cx="32" cy="32" r="4.5" class="blade-hole"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="app">
+    <aside class="side">
+      <div class="fp" aria-label="Fire Press creator tools">
+        <span class="fp-mark">FP</span>
+        <span class="fp-name">Fire Press<small>creator tools</small></span>
+      </div>
+      <nav class="tools" aria-label="Tools">
+        <a href="/" id="nav-roto" class="on"><svg class="ico"><use href="#i-scissors"/></svg><span>Roto-Slice</span></a>
+        <a href="/split" id="nav-split"><svg class="ico"><use href="#i-film"/></svg><span>Pre-Slice</span></a>
+      </nav>
+      <p class="side-note">Your video never leaves this computer.</p>
+    </aside>
+
+    <main>
+      <header class="top">
+        <h1 class="wordmark" aria-label="Roto-Slice">
+          <span class="roto">Roto-</span><span class="slice">Slice</span>
+          <svg class="wm-scissors" aria-hidden="true"><use href="#i-scissors"/></svg>
+        </h1>
+        <p id="tagline" class="tagline">Cut the dead air out of talking-head video.</p>
+        <span class="fp-pill">a Fire-Press tool</span>
+      </header>
+
+      <!-- ================= ROTO-SLICE (/) ================= -->
+      <div id="view-roto">
+        <label id="drop" class="drop">
+          <input id="file" type="file" accept="video/*,audio/*,.mov,.mp4,.mkv,.m4v">
+          <svg class="drop-blade" aria-hidden="true"><use href="#i-blade"/></svg>
+          <span class="drop-title">Feed the blade</span>
+          <span class="drop-sub">drop a talking-head video here, or click to browse &middot; up to 15 minutes</span>
+        </label>
+
+        <section id="busy" class="panel busy" hidden>
+          <svg class="busy-blade" aria-hidden="true"><use href="#i-blade"/></svg>
+          <div class="busy-body">
+            <div id="busy-text">Working&hellip;</div>
+            <div class="bar"><div id="busy-bar"></div></div>
+          </div>
+        </section>
+
+        <div id="notice" class="notice" hidden></div>
+
+        <section id="gate" class="panel gate" hidden>
+          <p id="gate-msg"></p>
+          <button id="gate-btn" type="button" class="primary big"><svg class="ico"><use href="#i-film"/></svg>Pre-Slice it</button>
+          <p class="hint">Pre-Slice is the built-in splitter. It opens with this video already loaded.</p>
+        </section>
+
+        <section id="work" hidden>
+          <div class="deck">
+            <div class="col-left">
+              <div class="panel player">
+                <video id="video" playsinline preload="metadata"></video>
+                <p id="video-note" class="hint" hidden></p>
+              </div>
+
+              <div class="panel controls">
+                <h2>Blade settings</h2>
+                <div class="ctl">
+                  <label for="threshold">Threshold <output id="threshold-out"></output></label>
+                  <input class="fader" id="threshold" type="range" min="-60" max="-20" step="1" value="-40">
+                  <p class="hint">Anything quieter than this counts as silence.</p>
+                </div>
+                <div class="ctl">
+                  <label for="min-silence">Min silence length <output id="min-silence-out"></output></label>
+                  <input class="fader" id="min-silence" type="range" min="200" max="3000" step="50" value="600">
+                  <p class="hint">Shorter gaps are natural pauses and stay in.</p>
+                </div>
+                <div class="ctl">
+                  <label for="padding">Padding <output id="padding-out"></output></label>
+                  <input class="fader" id="padding" type="range" min="0" max="500" step="10" value="120">
+                  <p class="hint">Breathing room kept on each side of a cut.</p>
+                </div>
+                <div class="row">
+                  <button id="auto" type="button"><svg class="ico"><use href="#i-bolt"/></svg>Auto-threshold</button>
+                  <button id="reset" type="button">Reset</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-right">
+              <div class="panel hero">
+                <div id="stats" class="stats"></div>
+
+                <div class="row transport">
+                  <button id="play" type="button" class="primary"><svg class="ico"><use href="#i-play"/></svg><span id="play-label">Play</span></button>
+                  <span id="timecode" class="gauge-text">0:00 / 0:00</span>
+                  <label class="check"><input id="preview-cuts" type="checkbox" checked> Preview cuts</label>
+                  <span class="spacer"></span>
+                  <button id="zoom-out" type="button" class="sq" title="Zoom out">&minus;</button>
+                  <button id="zoom-in" type="button" class="sq" title="Zoom in">+</button>
+                  <button id="zoom-fit" type="button">Fit</button>
+                </div>
+
+                <canvas id="mini" class="mini"></canvas>
+                <div id="wave-wrap" class="wave-wrap">
+                  <canvas id="wave"></canvas>
+                  <div id="playhead" class="playhead" hidden></div>
+                  <canvas id="sparks" class="sparks" hidden></canvas>
+                  <div id="blade" class="blade" hidden>
+                    <svg class="blade-disc" aria-hidden="true"><use href="#i-blade"/></svg>
+                  </div>
+                </div>
+                <p class="hint">
+                  <span class="swatch keep"></span> kept
+                  <span class="swatch cut"></span> cut &nbsp;&middot;&nbsp;
+                  Click a striped gap to keep it (click again to cut it). Click anywhere to jump there.
+                  Scroll to zoom, drag to slide. Space plays.
+                  <span id="overrides-note"></span>
+                </p>
+                <div class="row">
+                  <button id="clear-overrides" type="button" hidden>Undo manual keeps</button>
+                  <span class="spacer"></span>
+                  <button id="new-file" type="button">Load a different video</button>
+                </div>
+              </div>
+
+              <div class="panel" id="export">
+                <h2>Export</h2>
+                <div class="opts">
+                  <fieldset>
+                    <legend>What you get</legend>
+                    <label class="opt"><input type="radio" name="mode" value="ripple" checked>
+                      <span><b>Ripple</b> &mdash; one tight video with the silences removed.</span></label>
+                    <label class="opt"><input type="radio" name="mode" value="slice">
+                      <span><b>Slice</b> &mdash; every spoken segment as its own numbered clip.</span></label>
+                  </fieldset>
+                  <fieldset>
+                    <legend>Cut accuracy</legend>
+                    <label class="opt"><input type="radio" name="accuracy" value="quick" checked>
+                      <span><b>Quick</b> &mdash; no re-encoding: near-instant, original quality. Cuts start on a
+                        keyframe, so each may leave up to about a second of slop, and very short silences
+                        can't be cut. <span id="quick-note"></span></span></label>
+                    <label class="opt"><input type="radio" name="accuracy" value="precise">
+                      <span><b>Precise</b> &mdash; re-encodes: every cut lands on the exact frame, but much slower.</span></label>
+                  </fieldset>
+                </div>
+                <div class="row">
+                  <button id="export-btn" type="button" class="primary big"><svg class="ico"><use href="#i-upload"/></svg>Export</button>
+                  <button id="cancel-btn" type="button" hidden>Cancel</button>
+                  <span class="spacer"></span>
+                  <button id="dl-json" type="button" title="Keep segments in seconds"><svg class="ico"><use href="#i-doc"/></svg>Cut list (.json)</button>
+                  <button id="dl-edl" type="button" title="CMX3600 edit list for DaVinci Resolve or Premiere"><svg class="ico"><use href="#i-doc"/></svg>Cut list (.edl)</button>
+                </div>
+                <div id="export-progress" class="gauge" hidden>
+                  <div class="gauge-dial"><span id="export-pct">0</span><small>%</small></div>
+                  <div class="gauge-body">
+                    <div id="export-text" class="gauge-text"></div>
+                    <div class="bar"><div id="export-bar"></div></div>
+                  </div>
+                </div>
+                <div id="export-note" class="notice" hidden></div>
+                <div id="results" hidden>
+                  <div class="row bench-head">
+                    <h2>On the bench</h2>
+                    <span id="results-summary" class="gauge-text"></span>
+                    <span class="spacer"></span>
+                    <button id="dl-all" type="button" class="primary" hidden>Download all (.zip)</button>
+                  </div>
+                  <ul id="result-list" class="bench"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ================= PRE-SLICE (/split) ================= -->
+      <div id="view-split" hidden>
+        <label id="split-drop" class="drop">
+          <input id="split-file" type="file" accept="video/*,.mov,.mp4,.mkv,.m4v">
+          <svg class="drop-blade" aria-hidden="true"><use href="#i-blade"/></svg>
+          <span class="drop-title">Load the long one</span>
+          <span class="drop-sub">drop a video of any length here, or click to browse</span>
+        </label>
+
+        <section id="split-busy" class="panel busy" hidden>
+          <svg class="busy-blade" aria-hidden="true"><use href="#i-blade"/></svg>
+          <div class="busy-body">
+            <div id="split-busy-text">Working&hellip;</div>
+            <div class="bar"><div id="split-busy-bar"></div></div>
+          </div>
+        </section>
+        <div id="split-notice" class="notice" hidden></div>
+
+        <section id="split-work" hidden>
+          <div class="panel hero" id="sp-editor">
+            <div class="split-player">
+              <video id="split-video" playsinline preload="metadata"></video>
+            </div>
+            <p id="split-video-note" class="hint" hidden></p>
+
+            <div class="row transport">
+              <button id="sp-back-s" type="button" title="Back 1 second (Shift + Left)">&minus;1 s</button>
+              <button id="sp-back-f" type="button" title="Back 1 frame (Left arrow)">&minus;1 frame</button>
+              <button id="sp-play" type="button" class="primary">Play</button>
+              <button id="sp-fwd-f" type="button" title="Forward 1 frame (Right arrow)">+1 frame</button>
+              <button id="sp-fwd-s" type="button" title="Forward 1 second (Shift + Right)">+1 s</button>
+              <span id="sp-time" class="gauge-text">0:00.00 / 0:00</span>
+              <span class="spacer"></span>
+              <button id="sp-zoom-out" type="button" class="sq" title="Zoom out">&minus;</button>
+              <button id="sp-zoom-in" type="button" class="sq" title="Zoom in">+</button>
+              <button id="sp-zoom-fit" type="button">Fit</button>
+            </div>
+
+            <div id="sp-timeline" class="sp-timeline">
+              <canvas id="sp-canvas"></canvas>
+              <div id="sp-markers"></div>
+              <div id="sp-playhead" class="sp-playhead" hidden><span></span></div>
+            </div>
+
+            <div class="row sp-actions">
+              <button id="sp-add" type="button" class="primary big" title="Shortcut: S"><svg class="ico"><use href="#i-scissors"/></svg>Add Slice</button>
+              <button id="sp-auto" type="button" title="Places slices about every 14:30, at the quietest moment nearby"><svg class="ico"><use href="#i-bolt"/></svg>Auto-Slice</button>
+              <button id="sp-clear" type="button">Clear slices</button>
+              <span id="sp-hint-live" class="live"></span>
+            </div>
+            <p class="hint">
+              Drag anywhere on the filmstrip to scrub. Arrow keys nudge one frame (hold Shift for one second), Space plays,
+              S drops a slice. Drag a blade to move it; press its &times; to remove it. Scroll to zoom.
+            </p>
+            <p id="sp-kf-note" class="hint"></p>
+          </div>
+
+          <div class="panel">
+            <h2>Pieces</h2>
+            <p id="sp-pieces-note" class="hint"></p>
+            <ol id="sp-pieces" class="sp-pieces"></ol>
+
+            <label class="check block"><input id="sp-precise" type="checkbox">
+              <span>Precise split (re-encode) &mdash; only if you need an exact frame. Much slower, and not lossless.</span></label>
+            <label class="check block" id="sp-delete-wrap"><input id="sp-delete" type="checkbox">
+              <span>Delete original after splitting <span id="sp-delete-why" class="hint inline"></span></span></label>
+
+            <div class="row sp-run">
+              <button id="sp-run-folder" type="button" class="primary big"><svg class="ico"><use href="#i-upload"/></svg>Split &amp; save to a folder</button>
+              <button id="sp-run-dl" type="button">Split &amp; download</button>
+              <button id="sp-cancel" type="button" hidden>Cancel</button>
+              <span class="spacer"></span>
+              <button id="sp-new" type="button">Load a different video</button>
+            </div>
+            <div id="sp-progress" hidden>
+              <div id="sp-progress-text" class="gauge-text"></div>
+              <div class="bar"><div id="sp-progress-bar"></div></div>
+            </div>
+            <div id="sp-note" class="notice" hidden></div>
+            <ul id="sp-results" class="result-list"></ul>
+          </div>
+        </section>
+
+        <dialog id="sp-confirm">
+          <form method="dialog">
+            <h2>Delete the original?</h2>
+            <p id="sp-confirm-text"></p>
+            <div class="row">
+              <span class="spacer"></span>
+              <button value="no" type="submit">Keep the original</button>
+              <button value="yes" type="submit" class="danger">Delete it after splitting</button>
+            </div>
+          </form>
+        </dialog>
+      </div>
+
+      <details class="panel" id="engine">
+        <summary>Engine details</summary>
+        <dl>
+          <dt>Cross-origin isolated</dt><dd id="st-isolated">&hellip;</dd>
+          <dt>ffmpeg core</dt><dd id="st-core">loading&hellip;</dd>
+          <dt>Engine load time</dt><dd id="st-load">&hellip;</dd>
+          <dt>File</dt><dd id="st-file">&mdash;</dd>
+          <dt>Video</dt><dd id="st-video">&mdash;</dd>
+          <dt>Audio</dt><dd id="st-audio">&mdash;</dd>
+          <dt>Audio extract</dt><dd id="st-extract">&mdash;</dd>
+          <dt>Slider response</dt><dd id="st-perf">&mdash;</dd>
+        </dl>
+      </details>
+
+      <footer><span class="fp-pill">a Fire-Press tool</span> <span class="foot-links">Free and open source · <a data-testid="bug-link" href="https://github.com/robbiefromramona-press/roto-slice/issues/new/choose" target="_blank" rel="noopener noreferrer">Report a bug / Suggest a feature</a> · <a href="https://github.com/robbiefromramona-press/roto-slice" target="_blank" rel="noopener noreferrer">View the code</a></span></footer>
+    </main>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+# Pre-Slice lives at /split but is the same single-page app.
+/split /index.html 200
