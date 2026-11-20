@@ -15,6 +15,7 @@ import { planQuick, keyframeInterval, buildCutlistJson, buildEdl, baseName } fro
 import { clearOutputs, download, freeSpace } from './outstore.js';
 import { initSplit, loadIntoSplit, splitKey, splitShown } from './split.js';
 import { BladeFx } from './blade.js';
+import { showKofiNudge, hideKofiNudge, initKofiNudges } from './kofi.js';
 // Brand fonts, self-hosted (a font CDN would be blocked by the isolation headers).
 import '@fontsource/bebas-neue/400.css';
 import '@fontsource-variable/inter';
@@ -306,6 +307,7 @@ function exportNote(text, bad) {
 }
 function clearResults() {
   $('results').hidden = true;
+  hideKofiNudge('kofi-nudge-roto');
   $('result-list').textContent = '';
   $('export-progress').hidden = true;
   exportNote('');
@@ -452,6 +454,7 @@ function renderResults(result) {
   all.hidden = n < 2;
   all.textContent = canZip(result.outputs) ? 'Download all (.zip)' : 'Download all (one by one)';
   $('results').hidden = false;
+  showKofiNudge('kofi-nudge-roto');
   exportProgress('Done', 1);
   paintThumbs(thumbJobs);
 }
@@ -697,6 +700,7 @@ $('gate-btn').addEventListener('click', () => {
 initSplit({
   onSendToRoto: (file) => { showView('roto'); handleFile(file, null); window.scrollTo(0, 0); },
 });
+initKofiNudges();
 showView(location.pathname.startsWith('/split') ? 'split' : 'roto', false);
 
 $('new-file').addEventListener('click', resetWorkspace);

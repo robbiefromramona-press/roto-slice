@@ -26,11 +26,26 @@ const testMedia = {
   },
 };
 
+// Dev only: /credits is a real page (credits.html). The host (Cloudflare Pages) maps the
+// clean URL itself; this does the same for `vite` and `vite preview`.
+const cleanUrls = {
+  name: 'roto-clean-urls',
+  configureServer(server) {
+    server.middlewares.use((req, _res, next) => { if (req.url === '/credits') req.url = '/credits.html'; next(); });
+  },
+  configurePreviewServer(server) {
+    server.middlewares.use((req, _res, next) => { if (req.url === '/credits') req.url = '/credits.html'; next(); });
+  },
+};
+
 export default defineConfig({
-  plugins: [testMedia],
+  plugins: [testMedia, cleanUrls],
   server: { port: 5183, strictPort: true, headers: isolation },
   preview: { port: 5183, strictPort: true, headers: isolation },
   optimizeDeps: { exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'] },
   worker: { format: 'es' },
-  build: { target: 'es2022' },
+  build: {
+    target: 'es2022',
+    rollupOptions: { input: { main: 'index.html', credits: 'credits.html' } },
+  },
 });

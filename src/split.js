@@ -9,6 +9,7 @@ import * as engine from './engine.js';
 import { computeRmsDb, clock, MAX_ROTO_SECONDS } from './analysis.js';
 import { nearestKeyframe, autoSlicePoints, piecesFromMarkers, partName } from './splitplan.js';
 import { clearOutputs, download, freeSpace } from './outstore.js';
+import { showKofiNudge, hideKofiNudge } from './kofi.js';
 
 const $ = (id) => document.getElementById(id);
 const THUMB_H = 64; // CSS px
@@ -118,7 +119,7 @@ function draw() {
   const stripH = Math.round(THUMB_H * dpr);
   const { start, end } = P.view;
   const span = end - start;
-  ctx.fillStyle = '#0b0b14';
+  ctx.fillStyle = '#0b0814';
   ctx.fillRect(0, 0, W, H);
 
   // filmstrip: thumbnails on a power-of-two time grid, so zooming reuses them
@@ -416,6 +417,7 @@ function reset() {
   $('split-work').hidden = true;
   $('split-drop').hidden = false;
   $('sp-results').textContent = '';
+  hideKofiNudge('kofi-nudge-split');
   $('sp-markers').textContent = '';
   notice('');
   runNote('');
@@ -583,6 +585,7 @@ async function runSplit(mode, test = {}) {
   let dir = null;
   runNote('');
   $('sp-results').textContent = '';
+  hideKofiNudge('kofi-nudge-split');
 
   try {
     if (mode === 'folder') {
@@ -761,6 +764,7 @@ function renderResults(parts, mode) {
     li.append(name, meta, dl, send);
     list.append(li);
   }
+  if (parts.length) showKofiNudge('kofi-nudge-split');
 }
 
 // ----------------------------------------------------------------- init --

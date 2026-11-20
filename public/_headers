@@ -13,5 +13,8 @@
   Content-Security-Policy: default-src 'self'; script-src 'self' blob: 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self' blob: https://cdn.jsdelivr.net; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self' data:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 
 # The two small ffmpeg core scripts only change when the package version changes.
+/brand/*
+  Cache-Control: public, max-age=86400
+
 /ffmpeg/*
   Cache-Control: public, max-age=604800

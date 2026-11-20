@@ -8,7 +8,7 @@
 // the blade finishes its run before the results appear.
 
 const MIN_SWEEP_S = 1.3;
-const SPARK_COLORS = ['#e8ff00', '#ffffff', '#ff00b8', '#ffd400'];
+const SPARK_COLORS = ['#ebff00', '#ffffff', '#ff00b8', '#ffd400'];
 
 export class BladeFx {
   /**
