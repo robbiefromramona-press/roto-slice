@@ -407,3 +407,11 @@ details.panel p { margin: 12px 0 0; }
 .credits code { font-family: var(--mono); font-size: 13px; }
 .credits .scroll { overflow-x: auto; }
 .back-link { display: inline-block; margin-bottom: 8px; }
+
+/* phone-only note near the drop zone */
+.phone-note {
+  display: flex; align-items: center; gap: 10px; margin: -6px 0 16px; padding: 7px 8px 7px 14px; border-radius: 8px;
+  font-size: 14px; background: rgba(255, 138, 0, 0.1); border: 1px solid var(--warn);
+}
+.phone-note span { flex: 1; }
+.phone-note .x { width: 28px; height: 28px; padding: 0; font-size: 18px; line-height: 1; box-shadow: none; border-radius: 50%; }
