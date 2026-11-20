@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "Browser-based silence cutter for talking-head video",
   "scripts": {
-    "predev": "node scripts/copy-core.mjs",
+    "predev": "node scripts/copy-core.mjs && node scripts/copy-licenses.mjs",
     "dev": "vite",
-    "prebuild": "node scripts/copy-core.mjs",
+    "prebuild": "node scripts/copy-core.mjs && node scripts/copy-licenses.mjs",
     "build": "vite build && node scripts/prune-dist.mjs",
     "preview": "vite preview",
     "serve:dist": "node scripts/serve-dist.mjs 5191",
@@ -17,6 +17,7 @@
   "type": "module",
   "devDependencies": {
     "playwright": "^1.65.1",
+    "sharp": "^0.35.5",
     "vite": "^8.3.8"
   },
   "dependencies": {

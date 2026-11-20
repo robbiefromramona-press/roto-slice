@@ -4,21 +4,41 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#0b0b14">
+  <meta name="theme-color" content="#0b0814">
+  <meta name="description" content="Cut the dead air out of talking-head video. Free, open source, and your video never leaves your computer.">
   <title>Roto-Slice</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="/brand/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/brand/icon-16.png">
+  <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Roto-Slice">
+  <meta property="og:title" content="Roto-Slice: cut the dead air out of talking-head video">
+  <meta property="og:description" content="Free, open source, in your browser. Your video never leaves your computer.">
+  <meta property="og:url" content="https://roto-slice.pages.dev/">
+  <meta property="og:image" content="https://roto-slice.pages.dev/brand/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Roto-Slice logo: a clapperboard, the name in chrome and pink, and scissors over a cyan waveform.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Roto-Slice: cut the dead air out of talking-head video">
+  <meta name="twitter:description" content="Free, open source, in your browser. Your video never leaves your computer.">
+  <meta name="twitter:image" content="https://roto-slice.pages.dev/brand/og-image.jpg">
   <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
   <!-- shared icon shapes -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
-      <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></symbol>
-      <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/></symbol>
-      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7 9l5-5 5 5M5 15v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4"/></symbol>
-      <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></symbol>
-      <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="currentColor" stroke="none"/></symbol>
-      <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6"/></symbol>
+      <symbol id="i-scissors" viewBox="0 0 88 80"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="23" cy="24" r="9"/><circle cx="23" cy="57" r="9"/><path d="M31 29l43 39M31 52l43-38M43 40h16"/></g></symbol>
+      <symbol id="i-film" viewBox="0 0 88 80"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="19" width="68" height="42" rx="4"/><path d="M19 19v42m50-42v42M10 27h9m-9 10h9m-9 10h9m-9 10h9m50-30h9m-9 10h9m-9 10h9m-9 10h9"/></g></symbol>
+      <symbol id="i-upload" viewBox="0 0 88 80"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M44 53V13m-15 15 15-15 15 15"/><path d="M19 48v22h50V48"/></g></symbol>
+      <symbol id="i-play" viewBox="0 0 88 80"><path d="M27 16v48l39-24z" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-bolt" viewBox="0 0 88 80"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 22h56M16 40h56M16 58h56"/><circle cx="34" cy="22" r="6"/><circle cx="57" cy="40" r="6"/><circle cx="27" cy="58" r="6"/><path d="M66 15l7 7-7 7"/></g></symbol>
+      <symbol id="i-json" viewBox="0 0 88 80"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M28 17h-6q-7 0-7 8v8q0 7-7 7 7 0 7 7v8q0 8 7 8h6M60 17h6q7 0 7 8v8q0 7 7 7-7 0-7 7v8q0 8-7 8h-6"/><path d="M36 30h16M36 40h16M36 50h16"/></g></symbol>
+      <symbol id="i-doc" viewBox="0 0 88 80"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M24 13h30l13 13v46H24zM54 13v14h13"/><path d="M33 39h25M33 49h25M33 59h17"/></g></symbol>
       <symbol id="i-blade" viewBox="0 0 64 64">
         <path d="M32 2l5 9 9-5 0 10 10 0-5 9 9 5-9 5 5 9-10 0 0 10-9-5-5 9-5-9-9 5 0-10-10 0 5-9-9-5 9-5-5-9 10 0 0-10 9 5z"/>
         <circle cx="32" cy="32" r="15" class="blade-plate"/>
@@ -42,9 +62,8 @@
 
     <main>
       <header class="top">
-        <h1 class="wordmark" aria-label="Roto-Slice">
-          <span class="roto">Roto-</span><span class="slice">Slice</span>
-          <svg class="wm-scissors" aria-hidden="true"><use href="#i-scissors"/></svg>
+        <h1 class="wordmark">
+          <img src="/brand/logo-horizontal.webp" width="1050" height="190" alt="Roto-Slice">
         </h1>
         <p id="tagline" class="tagline">Cut the dead air out of talking-head video.</p>
         <span class="fp-pill">a Fire-Press tool</span>
@@ -168,7 +187,7 @@
                   <button id="export-btn" type="button" class="primary big"><svg class="ico"><use href="#i-upload"/></svg>Export</button>
                   <button id="cancel-btn" type="button" hidden>Cancel</button>
                   <span class="spacer"></span>
-                  <button id="dl-json" type="button" title="Keep segments in seconds"><svg class="ico"><use href="#i-doc"/></svg>Cut list (.json)</button>
+                  <button id="dl-json" type="button" title="Keep segments in seconds"><svg class="ico"><use href="#i-json"/></svg>Cut list (.json)</button>
                   <button id="dl-edl" type="button" title="CMX3600 edit list for DaVinci Resolve or Premiere"><svg class="ico"><use href="#i-doc"/></svg>Cut list (.edl)</button>
                 </div>
                 <div id="export-progress" class="gauge" hidden>
@@ -179,6 +198,7 @@
                   </div>
                 </div>
                 <div id="export-note" class="notice" hidden></div>
+                <div class="kofi-nudge" id="kofi-nudge-roto" hidden><span>Saved you some time? <a href="https://ko-fi.com/robbiefromramona" target="_blank" rel="noopener noreferrer">&#9749; Buy me a coffee</a></span><button class="x" type="button" aria-label="Dismiss">&times;</button></div>
                 <div id="results" hidden>
                   <div class="row bench-head">
                     <h2>On the bench</h2>
@@ -273,6 +293,7 @@
               <div class="bar"><div id="sp-progress-bar"></div></div>
             </div>
             <div id="sp-note" class="notice" hidden></div>
+            <div class="kofi-nudge" id="kofi-nudge-split" hidden><span>Saved you some time? <a href="https://ko-fi.com/robbiefromramona" target="_blank" rel="noopener noreferrer">&#9749; Buy me a coffee</a></span><button class="x" type="button" aria-label="Dismiss">&times;</button></div>
             <ul id="sp-results" class="result-list"></ul>
           </div>
         </section>
@@ -290,6 +311,16 @@
         </dialog>
       </div>
 
+      <details class="panel" id="about">
+        <summary>About Roto-Slice</summary>
+        <p>Roto-Slice cuts the silences out of talking-head video, and Pre-Slice splits long videos into pieces. Everything runs in your browser; your video is never uploaded. It is free and open source, made by Fire-Press.</p>
+        <p class="about-links">
+          <a href="https://ko-fi.com/robbiefromramona" target="_blank" rel="noopener noreferrer">&#9749; Support on Ko-fi</a>
+          <a href="/credits">Credits &amp; licences</a>
+          <a href="https://github.com/robbiefromramona-press/roto-slice" target="_blank" rel="noopener noreferrer">Source code</a>
+        </p>
+      </details>
+
       <details class="panel" id="engine">
         <summary>Engine details</summary>
         <dl>
@@ -304,7 +335,7 @@
         </dl>
       </details>
 
-      <footer><span class="fp-pill">a Fire-Press tool</span> <span class="foot-links">Free and open source · <a data-testid="bug-link" href="https://github.com/robbiefromramona-press/roto-slice/issues/new/choose" target="_blank" rel="noopener noreferrer">Report a bug / Suggest a feature</a> · <a href="https://github.com/robbiefromramona-press/roto-slice" target="_blank" rel="noopener noreferrer">View the code</a></span></footer>
+      <footer><span class="fp-pill">a Fire-Press tool</span> <span class="foot-links">Free and open source · <a href="https://ko-fi.com/robbiefromramona" target="_blank" rel="noopener noreferrer">&#9749; Support on Ko-fi</a> · <a href="/credits">Credits &amp; licences</a> · <a data-testid="bug-link" href="https://github.com/robbiefromramona-press/roto-slice/issues/new/choose" target="_blank" rel="noopener noreferrer">Report a bug / Suggest a feature</a> · <a href="https://github.com/robbiefromramona-press/roto-slice" target="_blank" rel="noopener noreferrer">View the code</a></span></footer>
     </main>
   </div>
   <script type="module" src="/src/main.js"></script>

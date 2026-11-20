@@ -19,3 +19,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+Scope of this licence: the MIT terms above cover Roto-Slice's source code. They do not cover
+(1) the Fire-Press logos, icons and artwork in public/brand/, which are (c) Fire-Press, all
+rights reserved, or (2) the third-party components listed on the /credits page, in particular
+the FFmpeg cores (@ffmpeg/core, GPL-2.0-or-later), which keep their own licences.

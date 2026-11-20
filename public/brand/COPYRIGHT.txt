@@ -1,0 +1,5 @@
+(c) 2026 Fire-Press. All rights reserved.
+
+The logos, icons, monogram, backgrounds and social images in this folder are Fire-Press
+artwork. They are NOT covered by the MIT licence that applies to Roto-Slice's source code.
+You may not copy, modify or redistribute them without permission.

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0b0814">
+  <title>Credits &amp; licences · Roto-Slice</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <main class="credits">
+    <a class="wordmark back-link" href="/" aria-label="Roto-Slice, back to the app"><img src="/brand/logo-horizontal.webp" width="1050" height="190" alt="Roto-Slice"></a>
+    <p><a href="/">&larr; Back to Roto-Slice</a></p>
+    <h1>Credits &amp; licences</h1>
+    <p>Roto-Slice is free, open source, and built on other people's free software. This page lists everything it uses, who made it, and under what licence.</p>
+
+    <section class="panel">
+      <h2>The short version</h2>
+      <ul>
+        <li><strong>Roto-Slice's own code</strong> is MIT licensed.</li>
+        <li><strong>The FFmpeg engine</strong> that does the cutting is <strong>GPL-2.0-or-later</strong>. The source code is linked below.</li>
+        <li><strong>The Fire-Press logos and artwork</strong> are &copy; Fire-Press, all rights reserved.</li>
+        <li>Your video is processed in your browser and never uploaded.</li>
+      </ul>
+    </section>
+
+    <section class="panel" id="ffmpeg">
+      <h2>FFmpeg (GPL)</h2>
+      <p>Roto-Slice uses <a href="https://ffmpegwasm.netlify.app/" target="_blank" rel="noopener noreferrer">ffmpeg.wasm</a>, which is <a href="https://ffmpeg.org/" target="_blank" rel="noopener noreferrer">FFmpeg</a> compiled to WebAssembly. The cores we load (<code>@ffmpeg/core</code> and <code>@ffmpeg/core-mt</code>, version 0.12.10) are built from FFmpeg 5.1.4 with <code>--enable-gpl</code> and include the GPL video encoders x264 and x265, so they are licensed <strong>GPL-2.0-or-later</strong>.</p>
+      <p>The full licence text is here: <a href="/licenses/GPL-2.0.txt">GNU GPL version 2</a>.</p>
+
+      <h3>Our modification</h3>
+      <p>Roto-Slice patches the JavaScript file of the core (<code>ffmpeg-core.js</code>, and the multithreaded worker is shipped unchanged) to read big files faster and to write results to disk instead of memory. That patched file is served from this site and is under the same GPL. The patch is a small, readable script: <a href="https://github.com/robbiefromramona-press/roto-slice/blob/main/scripts/copy-core.mjs" target="_blank" rel="noopener noreferrer"><code>scripts/copy-core.mjs</code></a>. The large <code>ffmpeg-core.wasm</code> files are not modified; the page loads them from <a href="https://www.jsdelivr.com/" target="_blank" rel="noopener noreferrer">jsDelivr</a>'s copy of the npm package and checks their hash first.</p>
+
+      <h3>Where to get the source</h3>
+      <div class="scroll"><table>
+        <thead><tr><th>What</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>FFmpeg 5.1.4</td><td><a href="https://github.com/FFmpeg/FFmpeg/tree/n5.1.4" target="_blank" rel="noopener noreferrer">github.com/FFmpeg/FFmpeg (tag n5.1.4)</a> &middot; <a href="https://ffmpeg.org/releases/ffmpeg-5.1.4.tar.xz" target="_blank" rel="noopener noreferrer">source tarball</a></td></tr>
+          <tr><td>ffmpeg.wasm build scripts, v0.12.10</td><td><a href="https://github.com/ffmpegwasm/ffmpeg.wasm/tree/v0.12.10" target="_blank" rel="noopener noreferrer">github.com/ffmpegwasm/ffmpeg.wasm (tag v0.12.10)</a>, including the Dockerfile that builds the cores</td></tr>
+          <tr><td>The npm packages we ship</td><td><a href="https://www.npmjs.com/package/@ffmpeg/core/v/0.12.10" target="_blank" rel="noopener noreferrer">@ffmpeg/core 0.12.10</a> &middot; <a href="https://www.npmjs.com/package/@ffmpeg/core-mt/v/0.12.10" target="_blank" rel="noopener noreferrer">@ffmpeg/core-mt 0.12.10</a></td></tr>
+          <tr><td>Roto-Slice's patch and this site</td><td><a href="https://github.com/robbiefromramona-press/roto-slice" target="_blank" rel="noopener noreferrer">github.com/robbiefromramona-press/roto-slice</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="hint">If you cannot find something you need, open an issue on the Roto-Slice repository and we will provide it.</p>
+
+      <h3>Other components inside the FFmpeg build</h3>
+      <p>As listed by the ffmpeg.wasm build, each under its own licence (see each project for the exact terms):</p>
+      <div class="scroll"><table>
+        <thead><tr><th>Component</th><th>Version</th><th>Licence</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://www.videolan.org/developers/x264.html" target="_blank" rel="noopener noreferrer">x264</a> (H.264 encoder)</td><td>ffmpegwasm fork</td><td>GPL-2.0-or-later</td></tr>
+          <tr><td><a href="https://www.videolan.org/developers/x265.html" target="_blank" rel="noopener noreferrer">x265</a> (H.265 encoder)</td><td>3.4</td><td>GPL-2.0</td></tr>
+          <tr><td><a href="https://lame.sourceforge.io/" target="_blank" rel="noopener noreferrer">LAME</a> (MP3)</td><td>master</td><td>LGPL-2.0</td></tr>
+          <tr><td><a href="https://www.webmproject.org/code/" target="_blank" rel="noopener noreferrer">libvpx</a> (VP8/VP9)</td><td>1.13.1</td><td>BSD-3-Clause</td></tr>
+          <tr><td><a href="https://opus-codec.org/" target="_blank" rel="noopener noreferrer">Opus</a>, <a href="https://xiph.org/vorbis/" target="_blank" rel="noopener noreferrer">Vorbis</a>, <a href="https://xiph.org/ogg/" target="_blank" rel="noopener noreferrer">Ogg</a>, <a href="https://www.theora.org/" target="_blank" rel="noopener noreferrer">Theora</a></td><td>1.3.1, 1.3.3, 1.3.4, 1.1.1</td><td>BSD-3-Clause</td></tr>
+          <tr><td><a href="https://developers.google.com/speed/webp" target="_blank" rel="noopener noreferrer">libwebp</a></td><td>1.3.2</td><td>BSD-3-Clause</td></tr>
+          <tr><td><a href="https://zlib.net/" target="_blank" rel="noopener noreferrer">zlib</a></td><td>1.2.11</td><td>zlib</td></tr>
+          <tr><td><a href="https://freetype.org/" target="_blank" rel="noopener noreferrer">FreeType</a></td><td>2.10.4</td><td>FreeType Licence or GPL-2.0</td></tr>
+          <tr><td><a href="https://github.com/fribidi/fribidi" target="_blank" rel="noopener noreferrer">FriBidi</a></td><td>1.0.9</td><td>LGPL-2.1-or-later</td></tr>
+          <tr><td><a href="https://harfbuzz.github.io/" target="_blank" rel="noopener noreferrer">HarfBuzz</a></td><td>5.2.0</td><td>MIT</td></tr>
+          <tr><td><a href="https://github.com/libass/libass" target="_blank" rel="noopener noreferrer">libass</a></td><td>0.15.0</td><td>ISC</td></tr>
+          <tr><td><a href="https://github.com/sekrit-twc/zimg" target="_blank" rel="noopener noreferrer">zimg</a></td><td>3.0.5</td><td>WTFPL</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <h2>Libraries in the app</h2>
+      <div class="scroll"><table>
+        <thead><tr><th>Library</th><th>What it does</th><th>Licence</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://github.com/ffmpegwasm/ffmpeg.wasm" target="_blank" rel="noopener noreferrer">@ffmpeg/ffmpeg</a> and <code>@ffmpeg/util</code> 0.12</td><td>JavaScript wrapper that runs FFmpeg in a worker</td><td><a href="/licenses/ffmpeg-wasm-wrapper-MIT.txt">MIT</a></td></tr>
+          <tr><td>@ffmpeg/core and @ffmpeg/core-mt 0.12.10</td><td>The FFmpeg engine (see above)</td><td><a href="/licenses/GPL-2.0.txt">GPL-2.0-or-later</a></td></tr>
+          <tr><td><a href="https://github.com/101arrowz/fflate" target="_blank" rel="noopener noreferrer">fflate</a></td><td>Builds the .zip of exported clips</td><td><a href="/licenses/fflate-MIT.txt">MIT</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="hint">Build tools (Vite, Playwright, sharp) are used to make the site and are not part of what you download.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Fonts</h2>
+      <div class="scroll"><table>
+        <thead><tr><th>Font</th><th>Used for</th><th>Licence</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://github.com/dharmatype/Bebas-Neue" target="_blank" rel="noopener noreferrer">Bebas Neue</a> &copy; The Bebas Neue Project Authors</td><td>Headings</td><td><a href="/licenses/font-bebas-neue-OFL.txt">SIL OFL 1.1</a></td></tr>
+          <tr><td><a href="https://github.com/rsms/inter" target="_blank" rel="noopener noreferrer">Inter</a> &copy; The Inter Project Authors</td><td>Interface text</td><td><a href="/licenses/font-inter-OFL.txt">SIL OFL 1.1</a></td></tr>
+          <tr><td><a href="https://github.com/theleagueof/orbitron" target="_blank" rel="noopener noreferrer">Orbitron</a> &copy; The Orbitron Project Authors</td><td>Numbers and read-outs</td><td><a href="/licenses/font-orbitron-OFL.txt">SIL OFL 1.1</a></td></tr>
+        </tbody>
+      </table></div>
+      <p class="hint">Fonts are packaged by <a href="https://fontsource.org/" target="_blank" rel="noopener noreferrer">Fontsource</a> and served from this site, not from a font CDN.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Artwork and code</h2>
+      <ul>
+        <li><strong>Logos, icons, monogram, backgrounds and the social preview image</strong> are from the Fire-Press Roto-Slice asset pack v1.0. &copy; 2026 Fire-Press, all rights reserved. They are not under the MIT licence. See <a href="/brand/COPYRIGHT.txt">/brand/COPYRIGHT.txt</a>.</li>
+        <li><strong>Roto-Slice source code</strong> &copy; 2026 Fire-Press / Robbie, <a href="/licenses/roto-slice-MIT.txt">MIT licence</a>.</li>
+        <li><strong>Hosting:</strong> Cloudflare Pages. The large FFmpeg <code>.wasm</code> files are fetched from jsDelivr (a public npm mirror).</li>
+      </ul>
+    </section>
+
+    <p class="hint"><a href="https://ko-fi.com/robbiefromramona" target="_blank" rel="noopener noreferrer">&#9749; Support on Ko-fi</a> &middot; <a href="/">Back to Roto-Slice</a></p>
+  </main>
+  <script type="module" src="/src/credits.js"></script>
+</body>
+</html>
