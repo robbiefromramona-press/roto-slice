@@ -16,6 +16,7 @@ import { clearOutputs, download, freeSpace } from './outstore.js';
 import { initSplit, loadIntoSplit, splitKey, splitShown } from './split.js';
 import { BladeFx } from './blade.js';
 import { showKofiNudge, hideKofiNudge, initKofiNudges } from './kofi.js';
+import { initPhoneNote } from './phonenote.js';
 // Brand fonts, self-hosted (a font CDN would be blocked by the isolation headers).
 import '@fontsource/bebas-neue/400.css';
 import '@fontsource-variable/inter';
@@ -701,6 +702,7 @@ initSplit({
   onSendToRoto: (file) => { showView('roto'); handleFile(file, null); window.scrollTo(0, 0); },
 });
 initKofiNudges();
+initPhoneNote();
 showView(location.pathname.startsWith('/split') ? 'split' : 'roto', false);
 
 $('new-file').addEventListener('click', resetWorkspace);
